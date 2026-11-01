@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Sync — Report Road Hazard</title>
+  <meta name="description" content="Report municipal road damage throughout Tamil Nadu. Pin the road location on an interactive map, specify damage severity, and alert maintenance crews.">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet & MapLibre CSS (Local vendor with CDN fallback) -->
+  <link rel="stylesheet" href="../assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../assets/vendor/maplibre/maplibre-gl.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- Accessible Skip Link -->
+  <a href="#hazard-form-main" class="skip-link">Skip to complaint form content</a>
+
+  <!-- ======================================================================
+       Slide-Over Navigation Drawer
+       ====================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+  <aside class="dash-nav-drawer" id="navDrawer" aria-label="Citizen Navigation Drawer" role="dialog" aria-modal="true">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <div class="brand-logo-emblem" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+            <rect width="36" height="36" rx="8" fill="#183B32"/>
+            <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+            <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="drawer-brand-name">Road <span>Sync</span></span>
+          <span class="drawer-brand-sub">Public Portal</span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close navigation drawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- User Snippet -->
+    <div class="drawer-user-card">
+      <div class="user-avatar-initials" aria-hidden="true">PS</div>
+      <div class="drawer-user-meta">
+        <span class="drawer-user-name">Priya Sharma</span>
+        <span class="drawer-role-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Public User
+        </span>
+      </div>
+    </div>
+
+        <!-- Navigation Menu Items (Clean 4-Item Menu: Dashboard, My Complaints, Track Status, Logout) -->
+    <nav class="drawer-nav-section" aria-label="Citizen Portal Pages">
+      <span class="drawer-nav-label">Navigation Menu</span>
+      <ul class="drawer-nav-list">
+        <li>
+          <a href="dashboard-public.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-complaints.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            <span>My Complaints</span>
+          </a>
+        </li>
+        <li>
+          <a href="track-status.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+            </svg>
+            <span>Track Status</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Drawer Footer with Logout (Item 4) -->
+    <div class="drawer-footer">
+      <button type="button" class="drawer-logout-btn js-logout-btn" id="drawerLogoutBtn">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       Dashboard Top Navigation Bar
+       ====================================================================== -->
+  <header class="dash-navbar" role="banner">
+    <div class="container dash-nav-container">
+      
+      <!-- Brand & Hamburger Group -->
+      <div class="dash-brand-wrap">
+        <button type="button" class="dash-hamburger-btn" id="hamburgerBtn" aria-label="Open portal navigation menu" aria-expanded="false" aria-controls="navDrawer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="../index.html" class="brand-link" aria-label="Road Sync Homepage">
+          <div class="brand-logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+              <rect width="36" height="36" rx="8" fill="#183B32"/>
+              <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+              <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Road <span>Sync</span></span>
+            <span class="brand-subline">Citizen Portal</span>
+          </div>
+        </a>
+
+        <div class="portal-role-tag" aria-label="Current Role: Public User">
+          <span class="portal-role-dot" aria-hidden="true"></span>
+          <span>Public User</span>
+        </div>
+      </div>
+
+      
+
+      <!-- Right User Controls -->
+      <div class="dash-user-controls">
+        <button type="button" class="user-profile-btn" id="userProfileBtn" aria-expanded="false" aria-haspopup="true" aria-label="Citizen user profile menu">
+          <span class="user-avatar-initials" aria-hidden="true">PS</span>
+          <span class="user-display-name">Priya</span>
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div class="user-dropdown-menu" id="userDropdownMenu" role="menu">
+          <div class="dropdown-header">
+            <div class="user-avatar-initials large" aria-hidden="true">PS</div>
+            <div class="dropdown-user-info">
+              <span class="dropdown-user-name">Priya Sharma</span>
+              <span class="dropdown-user-role">Public Resident • Tamil Nadu</span>
+            </div>
+          </div>
+          <div class="dropdown-body">
+            <div class="dropdown-info-item">
+              <span class="info-label">Active Portal</span>
+              <span class="info-value">Public User Report Form</span>
+            </div>
+            <div class="dropdown-info-item">
+              <span class="info-label">Coverage Area</span>
+              <span class="info-value">Tamil Nadu State Roads</span>
+            </div>
+          </div>
+          <div class="dropdown-footer">
+            <button type="button" class="dropdown-action-btn js-logout-btn">
+              <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       Main Content: Report Road Hazard (Exactly 5 Form Fields)
+       ====================================================================== -->
+  <main id="hazard-form-main" class="dash-main-area">
+    <div class="container" style="max-width: 900px;">
+
+      <!-- Page Header with Breadcrumbs -->
+      <div class="portal-page-header">
+        <div class="portal-page-title-group">
+          <nav class="portal-breadcrumb" aria-label="Breadcrumb">
+            <a href="dashboard-public.html">Dashboard</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Report Hazard</span>
+          </nav>
+          <h1 class="portal-page-title">Report a Road Hazard</h1>
+          <p class="portal-page-desc">
+            Submit a road condition report directly to municipal maintenance dispatch. Please pin the road location and select the damage characteristics.
+          </p>
+        </div>
+      </div>
+
+      <!-- Submission Success Alert (Dynamically Shown After Form Submit) -->
+      <div id="submissionSuccessAlert" class="form-alert-box alert-success" style="display: none; margin-bottom: 2rem;">
+        <div class="alert-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 20 20" width="22" height="22" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="alert-content">
+          <h3 class="alert-title" id="successRefTitle">Complaint Registered Successfully</h3>
+          <p class="alert-body" id="successRefBody">
+            Your road hazard report has been recorded in this browser session under status <code>PENDING</code>.
+          </p>
+          <div class="alert-actions" style="margin-top: 0.875rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="track-status.html" id="btnTrackSubmittedNow" class="btn btn-primary btn-sm">
+              <span>Track Complaint Status</span>
+            </a>
+            <a href="my-complaints.html" class="btn btn-secondary btn-sm">
+              <span>View In My Complaints</span>
+            </a>
+          </div>
+        </div>
+        <button type="button" class="alert-dismiss-btn" id="dismissAlertBtn" aria-label="Dismiss alert">×</button>
+      </div>
+
+      <!-- THE 5-FIELD COMPLAINT FORM -->
+      <form id="roadComplaintForm" class="clean-hazard-form" novalidate>
+
+        <!-- ==================================================================
+             FIELD 1: Location (Interactive Google Maps Location Picker)
+             ================================================================== -->
+        <fieldset class="field-container-card" id="fieldLocationSection">
+          <div class="field-header-row">
+            <div class="field-label-wrap">
+              <span class="field-step-pill" aria-hidden="true">1</span>
+              <div>
+                <legend class="field-title-text">Road Location</legend>
+                <div class="field-helper-subtext">Search roads or landmarks across Tamil Nadu and pin the exact hazard position.</div>
+              </div>
+            </div>
+            <span class="field-badge-required">Required</span>
+          </div>
+
+          <!-- Leaflet OpenStreetMap Active Status Banner -->
+          <div class="map-setup-banner is-configured" id="mapSetupBanner" style="margin-bottom: 1.25rem;">
+            <div class="map-setup-banner-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" width="20" height="20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="map-setup-banner-text" id="mapSetupBannerText">
+              <strong>Free Interactive OpenStreetMap Active</strong>
+              <p>Explore Tamil Nadu through pan & zoom. Click anywhere or drag the pin marker to set road defect coordinates. Use the search bar below for address or landmark lookup.</p>
+            </div>
+          </div>
+
+          <!-- Interactive Map Container Card -->
+          <div class="map-picker-card">
+            
+            <!-- Tamil Nadu Location Search Toolbar -->
+            <div class="map-search-toolbar">
+              <div class="map-search-input-wrap">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                </svg>
+                <input 
+                  type="text" 
+                  id="mapSearchInput" 
+                  class="map-search-input" 
+                  placeholder="Search address, road, or landmark in Tamil Nadu (e.g. Anna Salai, Avinashi Rd, Mattuthavani)..." 
+                  aria-label="Search address, road, or landmark across Tamil Nadu"
+                >
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnSearchLoc">
+                <span>Find Location</span>
+              </button>
+            </div>
+
+            <!-- Search Feedback / Status Bar -->
+            <div id="mapSearchStatus" class="map-search-status-bar" style="display: none; padding: 0.5rem 1rem; font-size: 0.8125rem; background-color: var(--color-surface-alt); border-bottom: 1px solid var(--color-border-subtle); color: var(--color-charcoal);"></div>
+
+            <!-- Viewport Area: Live Leaflet OpenStreetMap Container -->
+            <div class="map-view-canvas-area" id="mapCanvasArea" style="height: 420px; position: relative;">
+              <div id="leafletMap" style="width: 100%; height: 100%; z-index: 1;"></div>
+            </div>
+
+            <!-- Quick Tamil Nadu Road Chips for Rapid Testing -->
+            <div class="tn-map-quick-roads" style="padding: 0.75rem 1rem; background-color: var(--color-surface-alt); border-top: 1px solid var(--color-border-subtle); display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">Quick Hubs:</span>
+              <button type="button" class="quick-road-chip" data-road="chennai-mount">Anna Salai, Chennai</button>
+              <button type="button" class="quick-road-chip" data-road="coimbatore-avinashi">Avinashi Road, Coimbatore</button>
+              <button type="button" class="quick-road-chip" data-road="madurai-ring">Ring Road Bypass, Madurai</button>
+              <button type="button" class="quick-road-chip" data-road="trichy-junction">Central Junction, Trichy</button>
+              <button type="button" class="quick-road-chip" data-road="salem-nh44">Bangalore Hwy (NH44), Salem</button>
+            </div>
+
+          </div>
+
+            <!-- Selected & Confirmed Location Badge -->
+            <div class="location-confirmed-card">
+              <div class="loc-confirmed-info">
+                <div class="loc-confirmed-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="22" height="22" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="loc-confirmed-name" id="displayLocName">Anna Salai (Mount Road) - Guindy</span>
+                  <span class="loc-confirmed-address" id="displayLocAddress">Anna Salai Arterial Corridor, Guindy, Chennai, Tamil Nadu 600032</span>
+                  <span class="loc-coords-pill" id="displayLocCoords">Coordinates: 13.0067° N, 80.2025° E</span>
+                </div>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnConfirmLocation">
+                <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span>Confirm Location</span>
+              </button>
+            </div>
+
+          <!-- Hidden Form Values for Captured Location -->
+          <input type="hidden" id="inputLocationName" name="locationName" value="Anna Salai (Mount Road) - Guindy">
+          <input type="hidden" id="inputLocationAddress" name="locationAddress" value="Anna Salai Arterial Corridor, Guindy, Chennai, Tamil Nadu 600032">
+          <input type="hidden" id="inputLocationLat" name="latitude" value="13.0067">
+          <input type="hidden" id="inputLocationLng" name="longitude" value="80.2025">
+          <input type="hidden" id="inputLocationConfirmed" name="locationConfirmed" value="true">
+
+          <div class="field-error-text" id="errLocation" role="alert"></div>
+        </fieldset>
+
+
+        <!-- ==================================================================
+             FIELD 2: Damage Type (Pothole, Road crack, Uneven road surface, Other)
+             ================================================================== -->
+        <fieldset class="field-container-card" id="fieldDamageTypeSection">
+          <div class="field-header-row">
+            <div class="field-label-wrap">
+              <span class="field-step-pill" aria-hidden="true">2</span>
+              <div>
+                <legend class="field-title-text">Damage Type</legend>
+                <div class="field-helper-subtext">Choose the category of road defect observed.</div>
+              </div>
+            </div>
+            <span class="field-badge-required">Required</span>
+          </div>
+
+          <div class="selectable-options-grid" role="radiogroup" aria-label="Select road damage type">
+            
+            <!-- Option 1: Pothole -->
+            <label class="selection-option-card" for="typePothole">
+              <input type="radio" id="typePothole" name="damageType" value="Pothole">
+              <div class="option-top-row">
+                <div class="option-icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                    <circle cx="10" cy="10" r="7"/>
+                  </svg>
+                </div>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Pothole</strong>
+              <span class="option-desc">Bowl-shaped depression or void in the bitumen surface.</span>
+            </label>
+
+            <!-- Option 2: Road crack -->
+            <label class="selection-option-card" for="typeCrack">
+              <input type="radio" id="typeCrack" name="damageType" value="Road crack">
+              <div class="option-top-row">
+                <div class="option-icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                    <path d="M4 16 L8 10 L12 12 L16 4" stroke="currentColor" stroke-width="2" fill="none"/>
+                  </svg>
+                </div>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Road crack</strong>
+              <span class="option-desc">Longitudinal, transverse, or alligator surface fissures.</span>
+            </label>
+
+            <!-- Option 3: Uneven road surface -->
+            <label class="selection-option-card" for="typeUneven">
+              <input type="radio" id="typeUneven" name="damageType" value="Uneven road surface">
+              <div class="option-top-row">
+                <div class="option-icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                    <path d="M2 12 Q 6 6, 10 12 T 18 12" stroke="currentColor" stroke-width="2" fill="none"/>
+                  </svg>
+                </div>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Uneven road surface</strong>
+              <span class="option-desc">Corrugations, rutting, sinkage, or pavement humps.</span>
+            </label>
+
+            <!-- Option 4: Other -->
+            <label class="selection-option-card" for="typeOther">
+              <input type="radio" id="typeOther" name="damageType" value="Other">
+              <div class="option-top-row">
+                <div class="option-icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                    <circle cx="10" cy="10" r="2"/>
+                    <circle cx="4" cy="10" r="2"/>
+                    <circle cx="16" cy="10" r="2"/>
+                  </svg>
+                </div>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Other</strong>
+              <span class="option-desc">Other road hazards (drain collapse, edge raveling, etc.).</span>
+            </label>
+
+          </div>
+
+          <!-- Other Damage Type Specification Input (Shown if 'Other' selected) -->
+          <div class="other-type-input-wrap" id="otherTypeContainer" style="display: none;">
+            <label for="otherTypeDetails" class="field-title-text" style="font-size: 0.875rem;">Specify Other Damage Type:</label>
+            <input type="text" id="otherTypeDetails" class="map-search-input" style="padding-left: 0.875rem; margin-top: 0.35rem;" placeholder="E.g., Broken manhole cover, collapsed curb, edge drop-off">
+          </div>
+
+          <div class="field-error-text" id="errDamageType" role="alert"></div>
+        </fieldset>
+
+
+        <!-- ==================================================================
+             FIELD 3: Damage Size and Severity
+             (Small crack or shallow pothole, Moderate damage, Large crack or deep pothole)
+             ================================================================== -->
+        <fieldset class="field-container-card" id="fieldSeveritySection">
+          <div class="field-header-row">
+            <div class="field-label-wrap">
+              <span class="field-step-pill" aria-hidden="true">3</span>
+              <div>
+                <legend class="field-title-text">Damage Size & Severity</legend>
+                <div class="field-helper-subtext">Select the scale and hazard impact of the damage.</div>
+              </div>
+            </div>
+            <span class="field-badge-required">Required</span>
+          </div>
+
+          <div class="selectable-options-grid" role="radiogroup" aria-label="Select damage size and severity">
+            
+            <!-- Option 1: Small crack or shallow pothole -->
+            <label class="selection-option-card" for="sevSmall">
+              <input type="radio" id="sevSmall" name="damageSeverity" value="Small crack or shallow pothole" data-rank="1">
+              <div class="option-top-row">
+                <span class="meta-tag" style="background-color: var(--color-olive-tint); color: var(--color-olive-dark);">Level 1</span>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Small crack or shallow pothole</strong>
+              <span class="option-desc">Minor surface cracks under 2 cm depth; vehicle passes safely.</span>
+            </label>
+
+            <!-- Option 2: Moderate damage -->
+            <label class="selection-option-card" for="sevModerate">
+              <input type="radio" id="sevModerate" name="damageSeverity" value="Moderate damage" data-rank="2">
+              <div class="option-top-row">
+                <span class="meta-tag" style="background-color: var(--color-ochre-light); color: var(--color-ochre);">Level 2</span>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Moderate damage</strong>
+              <span class="option-desc">Noticeable pothole (3-7 cm) or widespread rutting; causes vehicle swerving.</span>
+            </label>
+
+            <!-- Option 3: Large crack or deep pothole -->
+            <label class="selection-option-card" for="sevLarge">
+              <input type="radio" id="sevLarge" name="damageSeverity" value="Large crack or deep pothole" data-rank="3">
+              <div class="option-top-row">
+                <span class="meta-tag" style="background-color: rgba(217, 83, 79, 0.1); color: #b52b27;">Level 3</span>
+                <div class="option-check-circle" aria-hidden="true"></div>
+              </div>
+              <strong class="option-title">Large crack or deep pothole</strong>
+              <span class="option-desc">Severe crater (>8 cm depth) or broad depression; high crash risk for two-wheelers.</span>
+            </label>
+
+          </div>
+
+          <div class="field-error-text" id="errSeverity" role="alert"></div>
+        </fieldset>
+
+
+        <!-- ==================================================================
+             FIELD 4: Hazard Description
+             ================================================================== -->
+        <div class="field-container-card" id="fieldDescriptionSection">
+          <div class="field-header-row">
+            <div class="field-label-wrap">
+              <span class="field-step-pill" aria-hidden="true">4</span>
+              <div>
+                <label for="hazardDescription" class="field-title-text">Hazard Description</label>
+                <div class="field-helper-subtext">Detail the specific lane, depth, landmark, waterlogging, or traffic impact.</div>
+              </div>
+            </div>
+            <span class="field-badge-required">Required</span>
+          </div>
+
+          <textarea 
+            id="hazardDescription" 
+            name="hazardDescription" 
+            class="form-textarea" 
+            rows="4" 
+            placeholder="E.g., In the northbound center lane roughly 50 meters past the bus depot. Water collects inside during rain and poses high danger to two-wheelers at night..." 
+            maxlength="500" 
+            required
+          ></textarea>
+
+          <div class="char-counter-text">
+            <span id="charCountDisplay">0 / 500 characters</span>
+          </div>
+
+          <div class="field-error-text" id="errDescription" role="alert"></div>
+        </div>
+
+
+        <!-- ==================================================================
+             FIELD 5: Supporting Photograph (Optional)
+             ================================================================== -->
+        <div class="field-container-card" id="fieldPhotoSection">
+          <div class="field-header-row">
+            <div class="field-label-wrap">
+              <span class="field-step-pill" aria-hidden="true">5</span>
+              <div>
+                <label for="hazardPhotoFile" class="field-title-text">Supporting Photograph</label>
+                <div class="field-helper-subtext">Optional. Clear photo evidence helps municipal operators verify damage severity.</div>
+              </div>
+            </div>
+            <span class="field-badge-optional">Optional</span>
+          </div>
+
+          <!-- Hidden File Input -->
+          <input type="file" id="hazardPhotoFile" name="hazardPhoto" accept="image/jpeg,image/png,image/webp" style="display: none;">
+
+          <!-- Upload Dropzone -->
+          <div class="photo-dropzone-box" id="photoDropzone" role="button" tabindex="0" aria-label="Upload supporting damage photograph">
+            <div class="photo-dropzone-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="photo-dropzone-heading">Click or Drag to Upload Road Photograph</div>
+            <div class="photo-dropzone-hint">Supports JPG, PNG, WebP up to 5 MB</div>
+          </div>
+
+          <!-- Photo Preview Container (Shown when a photo is selected) -->
+          <div class="photo-preview-container" id="photoPreviewWrap" style="display: none; margin-top: 1rem;">
+            <img src="" alt="Damage preview" id="photoPreviewImg" class="photo-preview-thumbnail">
+            <div class="photo-preview-meta">
+              <span class="photo-preview-name" id="photoPreviewFileName">photo.jpg</span>
+              <span class="photo-preview-size" id="photoPreviewFileSize">1.2 MB</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn btn-secondary btn-sm" id="btnReplacePhoto">Change Photo</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnRemovePhoto" style="color: #b52b27;">Remove</button>
+            </div>
+          </div>
+
+          <div class="field-error-text" id="errPhoto" role="alert"></div>
+        </div>
+
+
+        <!-- ==================================================================
+             Submit Complaint & Reset Form Buttons
+             ================================================================== -->
+        <div class="form-buttons-action-bar">
+          <button type="button" class="btn btn-secondary" id="btnResetForm">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+            </svg>
+            <span>Reset Form</span>
+          </button>
+
+          <div class="form-buttons-right">
+            <a href="dashboard-public.html" class="btn btn-secondary">
+              <span>Cancel</span>
+            </a>
+            <button type="submit" class="btn btn-primary btn-lg" id="btnSubmitComplaint">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span>Submit Complaint</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       Dashboard Footer
+       ====================================================================== -->
+  <footer class="dash-footer" role="contentinfo">
+    <div class="container dash-footer-container">
+      <div class="dash-footer-left">
+        <strong>Road Sync</strong>
+        <span>• Public Complaint Submission Portal</span>
+      </div>
+      
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Leaflet JS (Local vendor with CDN fallback) -->
+  <script src="../assets/vendor/leaflet/leaflet.js"></script>
+  <script>
+    if (typeof L === 'undefined') {
+      document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>');
+    }
+  </script>
+  <!-- MapLibre GL JS & Leaflet-MapLibre-GL Bridge for OpenFreeMap (Local vendor with CDN fallback) -->
+  <script src="../assets/vendor/maplibre/maplibre-gl.js"></script>
+  <script>
+    if (typeof maplibregl === 'undefined') {
+      document.write('<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"><\/script>');
+    }
+  </script>
+  <script src="../assets/vendor/maplibre/leaflet-maplibre-gl.js"></script>
+  <script>
+    if (typeof L !== 'undefined' && typeof L.maplibreGL !== 'function') {
+      document.write('<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.21/leaflet-maplibre-gl.js"><\/script>');
+    }
+  </script>
+  <script src="../js/config.js"></script>
+  <script src="../js/api-client.js"></script>
+  <script src="../js/public-store.js"></script>
+  <script src="../js/public-nav.js"></script>
+  <script src="../js/report-hazard.js"></script>
+</body>
+</html>

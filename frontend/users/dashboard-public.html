@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Sync — Public User Dashboard</title>
+  <meta name="description" content="Road Sync Citizen Portal Dashboard. View submitted road hazard reports, municipal repair metrics, and access road maintenance services.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- Accessible Skip Link -->
+  <a href="#dashboard-main" class="skip-link">Skip to main dashboard content</a>
+
+  <!-- ======================================================================
+       Slide-Over Navigation Drawer (Accessible via Hamburger Button)
+       Contains exactly: Dashboard, My Complaints, Track Status, Logout
+       ====================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+  <aside class="dash-nav-drawer" id="navDrawer" aria-label="Citizen Navigation Drawer" role="dialog" aria-modal="true">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <div class="brand-logo-emblem" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+            <rect width="36" height="36" rx="8" fill="#183B32"/>
+            <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+            <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="drawer-brand-name">Road <span>Sync</span></span>
+          <span class="drawer-brand-sub">Public Portal</span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close navigation drawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Logged Citizen Profile Snippet -->
+    <div class="drawer-user-card">
+      <div class="user-avatar-initials" aria-hidden="true">PS</div>
+      <div class="drawer-user-meta">
+        <span class="drawer-user-name">Priya Sharma</span>
+        <span class="drawer-role-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Public User
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items (Only Dashboard, My Complaints, Track Status) -->
+    <nav class="drawer-nav-section" aria-label="Citizen Portal Pages">
+      <span class="drawer-nav-label">Navigation Menu</span>
+      <ul class="drawer-nav-list">
+        <li>
+          <a href="dashboard-public.html" class="drawer-nav-link active" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-complaints.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            <span>My Complaints</span>
+          </a>
+        </li>
+        <li>
+          <a href="track-status.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+            </svg>
+            <span>Track Status</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Drawer Footer with Logout (Item 4) -->
+    <div class="drawer-footer">
+      <button type="button" class="drawer-logout-btn js-logout-btn" id="drawerLogoutBtn">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       Dashboard Top Navigation Bar (Hamburger Button ONLY, No Duplicate Links)
+       ====================================================================== -->
+  <header class="dash-navbar" role="banner">
+    <div class="container dash-nav-container">
+      
+      <!-- Brand & Hamburger Group -->
+      <div class="dash-brand-wrap">
+        <!-- Hamburger Button -->
+        <button type="button" class="dash-hamburger-btn" id="hamburgerBtn" aria-label="Open portal navigation menu" aria-expanded="false" aria-controls="navDrawer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="../index.html" class="brand-link" aria-label="Road Sync Homepage">
+          <div class="brand-logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+              <rect width="36" height="36" rx="8" fill="#183B32"/>
+              <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+              <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Road <span>Sync</span></span>
+            <span class="brand-subline">Citizen Portal</span>
+          </div>
+        </a>
+
+        <div class="portal-role-tag" aria-label="Current Role: Public User">
+          <span class="portal-role-dot" aria-hidden="true"></span>
+          <span>Public User</span>
+        </div>
+      </div>
+
+      <!-- Right User Controls -->
+      <div class="dash-user-controls">
+        <button type="button" class="user-profile-btn" id="userProfileBtn" aria-expanded="false" aria-haspopup="true" aria-label="Citizen user profile menu">
+          <span class="user-avatar-initials" aria-hidden="true">PS</span>
+          <span class="user-display-name">Priya</span>
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+
+        <!-- Profile Dropdown Menu -->
+        <div class="user-dropdown-menu" id="userDropdownMenu" role="menu" aria-label="User profile options">
+          <div class="dropdown-header">
+            <div class="user-avatar-initials large" aria-hidden="true">PS</div>
+            <div class="dropdown-user-info">
+              <span class="dropdown-user-name">Priya Sharma</span>
+              <span class="dropdown-user-role">Public Resident • Tamil Nadu</span>
+            </div>
+          </div>
+          <div class="dropdown-body">
+            <div class="dropdown-info-item">
+              <span class="info-label">Current Role</span>
+              <span class="info-value">Public User Portal</span>
+            </div>
+            <div class="dropdown-info-item">
+              <span class="info-label">Active Jurisdiction</span>
+              <span class="info-value">Tamil Nadu Municipalities</span>
+            </div>
+            <div class="dropdown-info-item">
+              <span class="info-label">Session Mode</span>
+              <span class="info-value">Browser Session (Demo)</span>
+            </div>
+          </div>
+          <div class="dropdown-footer">
+            <button type="button" class="dropdown-action-btn js-logout-btn" id="headerLogoutBtn">
+              <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       Main Dashboard Content
+       ====================================================================== -->
+  <main id="dashboard-main" class="dash-main-area">
+    <div class="container dash-content-container">
+
+      <!-- Post-Submission Feedback Banner (Shown after redirect from Report Hazard) -->
+      <div id="dashboardSubmittedAlert" class="alert-box alert-success" style="display: none; margin-bottom: 1.5rem; align-items: flex-start; justify-content: space-between; gap: 1rem; border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background-color: rgba(46, 125, 50, 0.08); border: 1px solid rgba(46, 125, 50, 0.3);">
+        <div style="display: flex; gap: 0.875rem; align-items: flex-start;">
+          <div style="color: #2e7d32; flex-shrink: 0; margin-top: 2px;">
+            <svg viewBox="0 0 20 20" width="22" height="22" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div>
+            <h3 id="dashboardSubmittedTitle" style="font-size: 1rem; font-weight: 700; color: #1e5a22; margin-bottom: 0.25rem;">
+              Complaint Registered Successfully
+            </h3>
+            <p id="dashboardSubmittedBody" style="font-size: 0.875rem; color: var(--color-charcoal); line-height: 1.45; margin-bottom: 0.75rem;">
+              Your road hazard report has been recorded in this browser session.
+            </p>
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <a href="track-status.html" class="btn btn-primary btn-sm" id="btnTrackSubmittedFromDash">
+                Track This Complaint &rarr;
+              </a>
+              <a href="my-complaints.html" class="btn btn-secondary btn-sm">
+                View in Complaints List
+              </a>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="dismissDashboardToastBtn" class="alert-dismiss-btn" aria-label="Dismiss message" style="background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 4px;">
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Welcoming Hero Banner with Prominent Report Hazard Button -->
+      <section class="dash-welcome-card" aria-labelledby="welcomeHeading">
+        <div class="welcome-card-content">
+          <div class="welcome-tag">
+            <span class="portal-role-dot" aria-hidden="true"></span>
+            <span>Citizen Road Reporting Portal</span>
+          </div>
+          <h1 class="welcome-heading" id="welcomeHeading">Welcome back, Priya</h1>
+          <p class="welcome-text">
+            Pin road hazards throughout Tamil Nadu, alert municipal maintenance crews, and monitor real-time repair progress from citizen dispatch to completed asphalt restoration.
+          </p>
+          <div class="welcome-actions">
+            <!-- PROMINENT REPORT HAZARD BUTTON -->
+            <a href="report-hazard.html" class="btn btn-primary btn-lg" id="btnReportHazardCta">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/>
+              </svg>
+              <span>Report Road Hazard</span>
+            </a>
+            <a href="my-complaints.html" class="btn btn-secondary">
+              <span>View My Complaints</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="welcome-card-visual" aria-hidden="true">
+          <div class="visual-road-circle">
+            <svg viewBox="0 0 140 140" width="120" height="120" fill="none">
+              <circle cx="70" cy="70" r="66" stroke="#D4A56A" stroke-width="2" stroke-dasharray="6 6"/>
+              <circle cx="70" cy="70" r="54" fill="#183B32"/>
+              <path d="M48 110 L62 30 L78 30 L92 110 Z" fill="#292D29"/>
+              <line x1="70" y1="40" x2="70" y2="58" stroke="#D4A56A" stroke-width="3" stroke-linecap="round"/>
+              <line x1="70" y1="72" x2="70" y2="100" stroke="#D4A56A" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="70" cy="56" r="6" fill="#D4A56A"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Three Summary Metrics Cards (Calculated from Session Complaints Data) -->
+      <section class="dash-metrics-section" aria-label="Complaints Summary Statistics">
+        <div class="dash-stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+          
+          <!-- Stat 1: Total Complaints Submitted -->
+          <div class="stat-card" id="cardTotalComplaints">
+            <div class="stat-card-header">
+              <span class="stat-label">Total Complaints Submitted</span>
+              <div class="stat-icon-wrap" style="background-color: var(--color-olive-tint); color: var(--color-olive-dark);" aria-hidden="true">
+                <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card-body">
+              <span class="stat-value" id="statTotalCount">0</span>
+              <span class="stat-subtext">Registered across current browser session</span>
+            </div>
+            <div class="stat-card-footer">
+              <span class="demo-tag" title="Pre-seeded demo records clearly indicated">Demo Data • Session Only</span>
+            </div>
+          </div>
+
+          <!-- Stat 2: Ongoing Complaints -->
+          <div class="stat-card" id="cardOngoingComplaints">
+            <div class="stat-card-header">
+              <span class="stat-label">Ongoing Complaints</span>
+              <div class="stat-icon-wrap" style="background-color: var(--color-ochre-light); color: var(--color-ochre);" aria-hidden="true">
+                <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card-body">
+              <span class="stat-value" id="statOngoingCount">0</span>
+              <span class="stat-subtext">Assigned to field crew or under active repair</span>
+            </div>
+            <div class="stat-card-footer">
+              <span class="demo-tag" title="In-Progress repairs under field units">Active Operations</span>
+            </div>
+          </div>
+
+          <!-- Stat 3: Completed Complaints -->
+          <div class="stat-card" id="cardCompletedComplaints">
+            <div class="stat-card-header">
+              <span class="stat-label">Completed Complaints</span>
+              <div class="stat-icon-wrap" style="background-color: rgba(46, 125, 50, 0.12); color: #2e7d32;" aria-hidden="true">
+                <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 011.414 0l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card-body">
+              <span class="stat-value" id="statCompletedCount">0</span>
+              <span class="stat-subtext">Restored, inspected & road reopened</span>
+            </div>
+            <div class="stat-card-footer">
+              <span class="demo-tag" title="Verified municipal completions">Verified Completed</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Compact Recent Complaints Section -->
+      <section class="dash-card recent-complaints-section" aria-labelledby="recentComplaintsHeading">
+        <div class="dash-card-header">
+          <div>
+            <h2 class="dash-card-title" id="recentComplaintsHeading">Recent Complaint Submissions</h2>
+            <p class="dash-card-subline">Latest road condition reports recorded for this resident account.</p>
+          </div>
+          <div class="card-header-actions">
+            <a href="my-complaints.html" class="btn btn-secondary btn-sm">
+              <span>View All Complaints</span>
+              <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Recent Complaints List Container -->
+        <div id="recentComplaintsList" class="complaint-list-grid">
+          <!-- Dynamically populated via dashboard-public.js -->
+        </div>
+
+        <!-- Empty State (Shown when 0 complaints exist) -->
+        <div id="recentEmptyState" class="complaints-empty-state" style="display: none;">
+          <div class="empty-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <h3 class="empty-title">No Complaints Submitted Yet</h3>
+          <p class="empty-desc">You have not submitted any road damage reports in this session. Help keep our roads safe by reporting a pothole or cracked surface.</p>
+          <a href="report-hazard.html" class="btn btn-primary">
+            <span>Report Your First Road Hazard</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Educational Card: Municipal Repair Workflow Lifecycle (Corrected 4-Stage Lifecycle) -->
+      <section class="dash-card" style="margin-top: 2rem;">
+        <div class="dash-card-header">
+          <div>
+            <h2 class="dash-card-title">How Road Sync Handles Your Complaint</h2>
+            <p class="dash-card-subline">4-stage lifecycle aligned with municipal dispatch operations.</p>
+          </div>
+        </div>
+        <div class="callout-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+          <div class="callout-cell">
+            <span class="callout-num" style="color: var(--color-olive);">01</span>
+            <strong class="callout-title">Complaint Registered</strong>
+            <p class="callout-text">You pin the Tamil Nadu road location on the map, describe the damage, and attach photo evidence.</p>
+          </div>
+          <div class="callout-cell">
+            <span class="callout-num" style="color: var(--color-olive);">02</span>
+            <strong class="callout-title">Municipal Review and Triage</strong>
+            <p class="callout-text">Municipal operator reviews severity, verifies road classification, and qualifies the report.</p>
+          </div>
+          <div class="callout-cell">
+            <span class="callout-num" style="color: var(--color-ochre);">03</span>
+            <strong class="callout-title">Team and Machinery Assigned</strong>
+            <p class="callout-text">Work order dispatched to field maintenance team with required pavers, rollers, or mixers.</p>
+          </div>
+          <div class="callout-cell">
+            <span class="callout-num" style="color: #2e7d32;">04</span>
+            <strong class="callout-title">Repair Completed and Verified</strong>
+            <p class="callout-text">Asphalt compaction completed, road restored, quality inspected, and marked verified.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       Dashboard Footer (Cleaned Up: No Duplicate Bottom Navigation)
+       ====================================================================== -->
+  <footer class="dash-footer" role="contentinfo">
+    <div class="container dash-footer-container">
+      <div class="dash-footer-left">
+        <strong>Road Sync</strong>
+        <span>• Smart Municipal Road Maintenance Platform</span>
+        <span class="demo-tag" style="margin-left: 0.5rem;">Public Portal Demonstration</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/api-client.js"></script>
+  <script src="../js/public-store.js"></script>
+  <script src="../js/public-nav.js"></script>
+  <script src="../js/dashboard-public.js"></script>
+</body>
+</html>

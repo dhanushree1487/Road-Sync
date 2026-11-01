@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Sync — Maintenance Teams & Machinery Fleet</title>
+  <meta name="description" content="Municipal Operator maintenance divisions registry. Track team readiness, base depot nodes, and assigned heavy machinery fleets.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- Accessible Skip Link -->
+  <a href="#teams-main" class="skip-link">Skip to maintenance teams content</a>
+
+  <!-- ======================================================================
+       Slide-Over Navigation Drawer
+       Contains exactly: Dashboard, Manage Complaints, Repair Jobs, Maintenance Teams, Logout
+       ====================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+  <aside class="dash-nav-drawer" id="navDrawer" aria-label="Municipal Operator Navigation Drawer" role="dialog" aria-modal="true">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <div class="brand-logo-emblem" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+            <rect width="36" height="36" rx="8" fill="#183B32"/>
+            <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+            <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="drawer-brand-name">Road <span>Sync</span></span>
+          <span class="drawer-brand-sub">Operator Console</span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close navigation drawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Operator Profile Snippet -->
+    <div class="drawer-user-card">
+      <div class="drawer-user-avatar">
+        <span class="user-avatar-initials">MO</span>
+      </div>
+      <div class="drawer-user-info">
+        <span class="drawer-user-name">Municipal Operator</span>
+        <span class="drawer-role-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Central Operations Authority
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="drawer-nav-section" aria-label="Operator Console Pages">
+      <span class="drawer-nav-label">Operations Menu</span>
+      <ul class="drawer-nav-list">
+        <li>
+          <a href="dashboard-operator.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="manage-complaints.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            <span>Manage Complaints</span>
+          </a>
+        </li>
+        <li>
+          <a href="repair-jobs.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+            </svg>
+            <span>Repair Jobs</span>
+          </a>
+        </li>
+        <li>
+          <a href="maintenance-teams.html" class="drawer-nav-link active" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+            </svg>
+            <span>Maintenance Teams</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Drawer Footer with Logout -->
+    <div class="drawer-footer">
+      <button type="button" class="drawer-logout-btn js-logout-btn" id="drawerLogoutBtn">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       Dashboard Top Navigation Bar
+       ====================================================================== -->
+  <header class="dash-navbar" role="banner">
+    <div class="container dash-nav-container">
+      
+      <div class="dash-brand-wrap">
+        <button type="button" class="dash-hamburger-btn" id="hamburgerBtn" aria-label="Open operator navigation menu" aria-expanded="false" aria-controls="navDrawer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="../index.html" class="brand-link" aria-label="Road Sync Homepage">
+          <div class="brand-logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+              <rect width="36" height="36" rx="8" fill="#183B32"/>
+              <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+              <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Road <span>Sync</span></span>
+            <span class="brand-subline">Operator Console</span>
+          </div>
+        </a>
+
+        <div class="portal-role-tag" style="background-color: var(--color-olive-tint); color: var(--color-olive-dark); border-color: rgba(115, 125, 89, 0.3);">
+          <span class="portal-role-dot" style="background-color: var(--color-olive);" aria-hidden="true"></span>
+          <span>Municipal Operator</span>
+        </div>
+      </div>
+
+
+
+      <div class="dash-user-controls">
+        <div style="display: flex; align-items: center; gap: 0.85rem;">
+          <div class="user-avatar-initials" style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-hero-panel); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">MO</div>
+          <button type="button" class="btn btn-secondary btn-sm js-logout-btn" id="btnLogoutTop">Logout</button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       Main Content
+       ====================================================================== -->
+  <main class="dashboard-main-content" id="teams-main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="portal-page-header">
+        <div>
+          <h1 class="portal-title">Maintenance Divisions & Fleet Machinery</h1>
+          <p class="portal-subtitle">Track municipal maintenance team readiness, assigned equipment inventory, and operational dispatch availability across regional hubs.</p>
+        </div>
+        <div class="portal-actions">
+          <a href="repair-jobs.html" class="btn btn-primary">
+            <span>Work Orders Console &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Summary Counts -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div style="background-color: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 1.125rem 1.25rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); letter-spacing: 0.04em;">Total Registered Teams</span>
+          <div style="font-size: 1.75rem; font-weight: 800; color: var(--color-charcoal);" id="totalTeamsCount">3</div>
+          <span style="font-size: 0.75rem; color: var(--color-text-muted);">Aligned with Main.java (T01, T02, T03)</span>
+        </div>
+        <div style="background-color: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 1.125rem 1.25rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #155724; letter-spacing: 0.04em;">Available For Dispatch</span>
+          <div style="font-size: 1.75rem; font-weight: 800; color: #155724;" id="availableTeamsCount">1</div>
+          <span style="font-size: 0.75rem; color: var(--color-text-muted);">Ready for high-priority roadwork</span>
+        </div>
+        <div style="background-color: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 1.125rem 1.25rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #856404; letter-spacing: 0.04em;">Currently Engaged</span>
+          <div style="font-size: 1.75rem; font-weight: 800; color: #856404;" id="engagedTeamsCount">2</div>
+          <span style="font-size: 0.75rem; color: var(--color-text-muted);">Occupied on active work orders</span>
+        </div>
+      </div>
+
+      <!-- Teams Grid -->
+      <section class="team-grid" id="teamsGrid" aria-label="Maintenance Divisions List">
+        <!-- Dynamically injected via maintenance-teams.js -->
+      </section>
+
+      <!-- Equipment Fleet Inventory Breakdown -->
+      <section class="dash-card">
+        <h2 style="font-size: 1.125rem; font-weight: 800; color: var(--color-charcoal); margin-bottom: 1.25rem;">Municipal Heavy Machinery Fleet Inventory</h2>
+
+        <div class="op-table-responsive">
+          <table class="op-table" aria-label="Fleet Machinery Table">
+            <thead>
+              <tr>
+                <th>Equipment Type</th>
+                <th>Standard Operations Role</th>
+                <th>Units In Fleet</th>
+                <th>Deployment Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>JACKHAMMER</strong></td>
+                <td>Pavement breaking, defect edge squaring & excavation</td>
+                <td>3 Units</td>
+                <td><span class="team-status-pill busy">2 Active on Roadwork</span></td>
+              </tr>
+              <tr>
+                <td><strong>ASPHALT_MIXER</strong></td>
+                <td>Hot-mix asphalt preparation & batching</td>
+                <td>3 Units</td>
+                <td><span class="team-status-pill busy">2 Active on Roadwork</span></td>
+              </tr>
+              <tr>
+                <td><strong>PAVER</strong></td>
+                <td>Continuous mechanized asphalt laying & screeding</td>
+                <td>2 Units</td>
+                <td><span class="team-status-pill busy">1 Active on Roadwork</span></td>
+              </tr>
+              <tr>
+                <td><strong>ROAD_ROLLER</strong></td>
+                <td>Vibratory sub-base and surface compaction</td>
+                <td>3 Units</td>
+                <td><span class="team-status-pill busy">2 Active on Roadwork</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../js/api-client.js"></script>
+  <script src="../js/public-store.js"></script>
+  <script src="../js/operator-nav.js"></script>
+  <script src="../js/maintenance-teams.js"></script>
+</body>
+</html>

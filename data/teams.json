@@ -1,0 +1,49 @@
+[
+  {
+    "teamId": "T01",
+    "name": "Team T01 — Chennai South Rapid Unit",
+    "available": false,
+    "currentJobId": null,
+    "username": "team01",
+    "division": "Chennai Municipal Corporation",
+    "baseLocation": "L2 (Guindy Maintenance Depot)",
+    "equipment": [
+      "JACKHAMMER",
+      "ASPHALT_MIXER"
+    ],
+    "membersCount": 6,
+    "lead": "K. Ramanathan (Foreman)"
+  },
+  {
+    "teamId": "T02",
+    "name": "Team T02 — Coimbatore Central Division",
+    "available": false,
+    "currentJobId": null,
+    "username": "team02",
+    "division": "Coimbatore City Municipal Corp",
+    "baseLocation": "L4 (Gandhipuram Highway Yard)",
+    "equipment": [
+      "PAVER",
+      "ROAD_ROLLER"
+    ],
+    "membersCount": 8,
+    "lead": "M. Senthil Kumar (Supervisor)"
+  },
+  {
+    "teamId": "T03",
+    "name": "Team T03 — Madurai North Heavy Division",
+    "available": false,
+    "currentJobId": "JOB-105",
+    "username": "team03",
+    "division": "Madurai Corporation Works Dept",
+    "baseLocation": "L5 (Mattuthavani Operations Depot)",
+    "equipment": [
+      "JACKHAMMER",
+      "ASPHALT_MIXER",
+      "PAVER",
+      "ROAD_ROLLER"
+    ],
+    "membersCount": 10,
+    "lead": "S. Alagarsamy (Senior Engineer)"
+  }
+]

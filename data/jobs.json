@@ -1,0 +1,103 @@
+[
+  {
+    "jobId": "JOB-105",
+    "complaintRef": "RS-2026-0105",
+    "location": "Bangalore Highway (NH44) - Salem Junction",
+    "damageType": "Pothole",
+    "jobType": "Spot Repair",
+    "severity": 3,
+    "priority": 24,
+    "teamId": "T03",
+    "teamName": "Team T03 — Madurai North Heavy Division",
+    "status": "ASSIGNED",
+    "equipment": [
+      "JACKHAMMER",
+      "ASPHALT_MIXER"
+    ],
+    "estimatedTime": 60,
+    "assignedTime": "Oct 12, 2026 08:46 am",
+    "completedTime": null,
+    "notes": "Standard municipal repair work order dispatched."
+  },
+  {
+    "jobId": "JOB-104",
+    "complaintRef": "RS-2026-519",
+    "location": "Sardar Patel Road - Guindy Circle",
+    "damageType": "Pothole",
+    "jobType": "Spot Repair",
+    "severity": 3,
+    "priority": 30,
+    "teamId": "T03",
+    "teamName": "Team T03 — Madurai North Heavy Division",
+    "status": "COMPLETED",
+    "equipment": [
+      "JACKHAMMER",
+      "ASPHALT_MIXER"
+    ],
+    "assignedTime": "Oct 12, 2026 02:32 am",
+    "completedTime": "Oct 12, 2026 02:32 am",
+    "estimatedTime": 60,
+    "notes": "Scheduled for repair."
+  },
+  {
+    "jobId": "JOB-102",
+    "complaintRef": "RS-2026-0098",
+    "location": "Anna Salai (Mount Road) - Near Guindy",
+    "damageType": "Pothole",
+    "jobType": "PotholeRepair",
+    "severity": 3,
+    "priority": 30,
+    "teamId": "T01",
+    "teamName": "Team T01 — Chennai South Rapid Unit",
+    "status": "IN_PROGRESS",
+    "equipment": [
+      "JACKHAMMER",
+      "ASPHALT_MIXER",
+      "ROAD_ROLLER"
+    ],
+    "assignedTime": "Oct 08, 2026 01:45 pm",
+    "completedTime": "Oct 12, 2026 08:05 am",
+    "estimatedTime": 60,
+    "notes": "Scheduled for repair."
+  },
+  {
+    "jobId": "JOB-101",
+    "complaintRef": "RS-2026-0084",
+    "location": "Avinashi Road Corridor - Near Gandhipuram",
+    "damageType": "Uneven road surface",
+    "jobType": "ResurfacingRepair",
+    "severity": 2,
+    "priority": 20,
+    "teamId": "T02",
+    "teamName": "Team T02 — Coimbatore Central Division",
+    "status": "ASSIGNED",
+    "equipment": [
+      "PAVER",
+      "ROAD_ROLLER"
+    ],
+    "assignedTime": "Oct 05, 2026 04:30 pm",
+    "completedTime": "Oct 12, 2026 08:05 am",
+    "estimatedTime": 60,
+    "notes": "Scheduled for repair."
+  },
+  {
+    "jobId": "JOB-103",
+    "complaintRef": "RS-2026-0071",
+    "location": "Madurai Ring Road - Near Mattuthavani",
+    "damageType": "Road crack",
+    "jobType": "PotholeRepair",
+    "severity": 1,
+    "priority": 14,
+    "teamId": "T03",
+    "teamName": "Team T03 — Madurai North Heavy Division",
+    "status": "COMPLETED",
+    "equipment": [
+      "JACKHAMMER",
+      "ASPHALT_MIXER"
+    ],
+    "assignedTime": "Sept 30, 2026 08:30 am",
+    "completedTime": "Sept 30, 2026 11:15 am",
+    "estimatedTime": 60,
+    "notes": "Scheduled for repair."
+  }
+]

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Sync — Manage Road Damage Complaints & Triage</title>
+  <meta name="description" content="Municipal Operator complaint management and triage console. Inspect citizen reports, assign risk and traffic ranks, and calculate algorithmic repair priorities.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- Accessible Skip Link -->
+  <a href="#complaints-main" class="skip-link">Skip to complaint management content</a>
+
+  <!-- ======================================================================
+       Slide-Over Navigation Drawer
+       Contains exactly: Dashboard, Manage Complaints, Repair Jobs, Maintenance Teams, Logout
+       ====================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+  <aside class="dash-nav-drawer" id="navDrawer" aria-label="Municipal Operator Navigation Drawer" role="dialog" aria-modal="true">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <div class="brand-logo-emblem" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+            <rect width="36" height="36" rx="8" fill="#183B32"/>
+            <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+            <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="drawer-brand-name">Road <span>Sync</span></span>
+          <span class="drawer-brand-sub">Operator Console</span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close navigation drawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Operator Profile Snippet -->
+    <div class="drawer-user-card">
+      <div class="drawer-user-avatar">
+        <span class="user-avatar-initials">MO</span>
+      </div>
+      <div class="drawer-user-info">
+        <span class="drawer-user-name">Municipal Operator</span>
+        <span class="drawer-role-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Central Operations Authority
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="drawer-nav-section" aria-label="Operator Console Pages">
+      <span class="drawer-nav-label">Operations Menu</span>
+      <ul class="drawer-nav-list">
+        <li>
+          <a href="dashboard-operator.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="manage-complaints.html" class="drawer-nav-link active" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            <span>Manage Complaints</span>
+          </a>
+        </li>
+        <li>
+          <a href="repair-jobs.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+            </svg>
+            <span>Repair Jobs</span>
+          </a>
+        </li>
+        <li>
+          <a href="maintenance-teams.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+            </svg>
+            <span>Maintenance Teams</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Drawer Footer with Logout -->
+    <div class="drawer-footer">
+      <button type="button" class="drawer-logout-btn js-logout-btn" id="drawerLogoutBtn">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       Dashboard Top Navigation Bar
+       ====================================================================== -->
+  <header class="dash-navbar" role="banner">
+    <div class="container dash-nav-container">
+      
+      <div class="dash-brand-wrap">
+        <button type="button" class="dash-hamburger-btn" id="hamburgerBtn" aria-label="Open operator navigation menu" aria-expanded="false" aria-controls="navDrawer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="../index.html" class="brand-link" aria-label="Road Sync Homepage">
+          <div class="brand-logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+              <rect width="36" height="36" rx="8" fill="#183B32"/>
+              <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+              <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Road <span>Sync</span></span>
+            <span class="brand-subline">Operator Console</span>
+          </div>
+        </a>
+
+        <div class="portal-role-tag" style="background-color: var(--color-olive-tint); color: var(--color-olive-dark); border-color: rgba(115, 125, 89, 0.3);">
+          <span class="portal-role-dot" style="background-color: var(--color-olive);" aria-hidden="true"></span>
+          <span>Municipal Operator</span>
+        </div>
+      </div>
+
+
+
+      <div class="dash-user-controls">
+        <div style="display: flex; align-items: center; gap: 0.85rem;">
+          <div class="user-avatar-initials" style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-hero-panel); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">MO</div>
+          <button type="button" class="btn btn-secondary btn-sm js-logout-btn" id="btnLogoutTop">Logout</button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       Main Content
+       ====================================================================== -->
+  <main class="dashboard-main-content" id="complaints-main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="portal-page-header">
+        <div>
+          <h1 class="portal-title">Manage Citizen Complaints</h1>
+          <p class="portal-subtitle">Review incoming hazard reports, inspect road coordinates, and assign triage ranks to compute repair priority.</p>
+        </div>
+        <div class="portal-actions">
+          <span class="priority-pill routine" id="complaintsCountBadge">Loading records...</span>
+        </div>
+      </div>
+
+      <!-- Filter and Search Bar -->
+      <section class="op-filter-bar" aria-label="Complaint Filters">
+        <div class="op-search-box">
+          <svg class="op-search-icon" viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+          </svg>
+          <input type="text" class="op-search-input" id="searchComplaintsInput" placeholder="Search by Ref ID, location, or notes..." aria-label="Search complaints">
+        </div>
+
+        <div class="op-filter-group">
+          <label for="filterStatusSelect" style="font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted);">Status:</label>
+          <select class="op-filter-select" id="filterStatusSelect">
+            <option value="ALL">All Statuses</option>
+            <option value="PENDING_TRIAGE" selected>Pending Triage Only</option>
+            <option value="PRIORITIZED">Prioritized (Ready to Dispatch)</option>
+            <option value="IN_PROGRESS">Assigned & In Progress</option>
+            <option value="COMPLETED">Completed Repairs</option>
+          </select>
+
+          <label for="filterTypeSelect" style="font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); margin-left: 0.5rem;">Damage Type:</label>
+          <select class="op-filter-select" id="filterTypeSelect">
+            <option value="ALL">All Types</option>
+            <option value="Pothole">Pothole</option>
+            <option value="Crack">Crack / Fissure</option>
+            <option value="Uneven">Uneven Surface</option>
+            <option value="Other">Other Hazards</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Complaints Data Table -->
+      <div class="op-table-responsive">
+        <table class="op-table" aria-label="Citizen Complaints Registry">
+          <thead>
+            <tr>
+              <th>Ref ID & Date</th>
+              <th>Road Location & Coordinates</th>
+              <th>Damage Type</th>
+              <th>Reported Severity</th>
+              <th>Priority Score</th>
+              <th>Operational Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="complaintsTableBody">
+            <!-- Dynamic rows populated via manage-complaints.js -->
+          </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <div id="emptyStateBox" style="display: none; padding: 3rem 1.5rem; text-align: center; color: var(--color-text-muted);">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 0.75rem auto; color: var(--color-text-muted);">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--color-charcoal); margin-bottom: 0.25rem;">No Matching Complaints</h3>
+          <p style="font-size: 0.875rem;">No complaint records matched your current search and filter criteria.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       Triage & Inspection Modal Dialog (Explicit Triage Gate)
+       ====================================================================== -->
+  <div class="op-modal-backdrop" id="triageModalBackdrop" aria-modal="true" role="dialog" aria-labelledby="triageModalTitle">
+    <div class="op-modal-dialog">
+      
+      <!-- Modal Header -->
+      <div class="op-modal-header">
+        <div>
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-hero-panel);">Municipal Triage & Prioritization Gate</span>
+          <h2 class="op-modal-title" id="triageModalTitle">Triage Assessment: <span id="modalComplaintRef">RS-2026-XXXX</span></h2>
+        </div>
+        <button type="button" class="op-modal-close" id="closeTriageModalBtn" aria-label="Close triage dialog">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="op-modal-body">
+        
+        <!-- Citizen Complaint Information Snapshot -->
+        <div style="background-color: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <strong style="font-size: 1rem; color: var(--color-charcoal);" id="modalComplaintLocation">Location Title</strong>
+              <div style="font-size: 0.8125rem; color: var(--color-text-muted);" id="modalComplaintAddress">Address Corridor</div>
+            </div>
+            <div style="text-align: right;">
+              <span class="priority-pill routine" id="modalComplaintType">Pothole</span>
+              <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.2rem;" id="modalComplaintDate">Oct 11, 2026</div>
+            </div>
+          </div>
+
+          <div style="font-size: 0.8125rem; color: var(--color-charcoal); background-color: var(--color-white); padding: 0.75rem 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--color-border-subtle);">
+            <strong>Resident Description:</strong>
+            <span id="modalComplaintDesc">Description text goes here...</span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.8125rem; color: var(--color-text-muted); flex-wrap: wrap; gap: 0.5rem;">
+            <span>GPS Pin: <code id="modalComplaintCoords" style="color: var(--color-charcoal); font-weight: 600;">13.0067° N, 80.2025° E</code></span>
+            <span id="modalNoPhotoText" style="font-style: italic;">No photo provided with report</span>
+          </div>
+
+          <!-- Photo Container -->
+          <div id="modalPhotoContainer" style="display: none; margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 0.35rem; text-transform: uppercase;">Supporting Resident Photo:</div>
+            <img id="modalPhotoImg" src="" alt="Damage photograph submitted by citizen" style="max-height: 180px; border-radius: var(--border-radius-sm); border: 1px solid var(--color-border); object-fit: cover;">
+          </div>
+        </div>
+
+        <!-- Section Title -->
+        <div>
+          <h3 style="font-size: 1rem; font-weight: 800; color: var(--color-charcoal); margin-bottom: 0.25rem;">Operator Assessment Factors (1 to 3 Scale)</h3>
+          <p style="font-size: 0.8125rem; color: var(--color-text-muted);">
+            Each factor requires an integer value from 1 to 3. All 4 factors must be validated to calculate authoritative priority via Java <code>DefaultPriorityPolicy</code>.
+          </p>
+        </div>
+
+        <!-- 4 Triage Factors Form Controls -->
+        <div class="triage-factors-grid">
+          
+          <!-- Factor 1: Damage Severity -->
+          <div class="triage-factor-card">
+            <div class="triage-factor-header">
+              <span class="triage-factor-name">1. Damage Severity</span>
+              <span class="triage-factor-weight">Weight ×3 (30%)</span>
+            </div>
+            <p class="triage-factor-desc">Physical road defect scale (confirmed from report / field inspection).</p>
+            <div class="triage-radio-group">
+              <label class="triage-radio-option">
+                <input type="radio" name="triageSeverity" value="1">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Level 1: Minor Damage</span>
+                  <span class="triage-option-sub">Small crack or shallow pothole (&lt;5 cm deep)</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageSeverity" value="2">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Level 2: Moderate Damage</span>
+                  <span class="triage-option-sub">Deep pothole or pronounced road corrugation (5–10 cm)</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageSeverity" value="3">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Level 3: Critical / Structural Failure</span>
+                  <span class="triage-option-sub">Severe crater, deep cratering, or subgrade subsidence (&gt;10 cm)</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Factor 2: Accident Risk -->
+          <div class="triage-factor-card">
+            <div class="triage-factor-header">
+              <span class="triage-factor-name">2. Accident Risk</span>
+              <span class="triage-factor-weight">Weight ×3 (30%)</span>
+            </div>
+            <p class="triage-factor-desc">Immediate safety hazard to two-wheelers, buses, and motorists.</p>
+            <div class="triage-radio-group">
+              <label class="triage-radio-option">
+                <input type="radio" name="triageRisk" value="1">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Risk 1: Low Hazard</span>
+                  <span class="triage-option-sub">Straight road, daylight visibility, low-speed zone</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageRisk" value="2">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Risk 2: Moderate Hazard</span>
+                  <span class="triage-option-sub">Moderate speed, unlit section, near bus bay or intersection</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageRisk" value="3">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Risk 3: Critical Hazard</span>
+                  <span class="triage-option-sub">Flyover ramp, blind curve, bridge approach, or heavy mixed two-wheeler lane</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Factor 3: Traffic Rank (Manual Corridor Assessment) -->
+          <div class="triage-factor-card">
+            <div class="triage-factor-header">
+              <span class="triage-factor-name">3. Traffic Corridor Rank</span>
+              <span class="triage-factor-weight">Weight ×2 (20%)</span>
+            </div>
+            <p class="triage-factor-desc">Manual municipal assessment based on corridor volume tier (not live sensor telemetry).</p>
+            <div class="triage-radio-group">
+              <label class="triage-radio-option">
+                <input type="radio" name="triageTraffic" value="1">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Rank 1: Low-Traffic Corridor</span>
+                  <span class="triage-option-sub">Local residential street, colony alley, or service road (&lt;5,000 PCU/day)</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageTraffic" value="2">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Rank 2: Moderate-Traffic Corridor</span>
+                  <span class="triage-option-sub">Collector street, commercial hub, or municipal bus route (5,000–15,000 PCU/day)</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageTraffic" value="3">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Rank 3: High-Traffic Arterial</span>
+                  <span class="triage-option-sub">Major arterial highway, bypass ring road, or freight corridor (&gt;15,000 PCU/day)</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Factor 4: Road Importance (Jurisdictional Tier) -->
+          <div class="triage-factor-card">
+            <div class="triage-factor-header">
+              <span class="triage-factor-name">4. Road Importance</span>
+              <span class="triage-factor-weight">Weight ×2 (20%)</span>
+            </div>
+            <p class="triage-factor-desc">Administrative road classification in Tamil Nadu transport hierarchy.</p>
+            <div class="triage-radio-group">
+              <label class="triage-radio-option">
+                <input type="radio" name="triageImportance" value="1">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Rank 1: Local Municipal Street</span>
+                  <span class="triage-option-sub">Colony street, residential ward road, or cul-de-sac</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageImportance" value="2">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Rank 2: Major Municipal Link</span>
+                  <span class="triage-option-sub">Sub-arterial connecting city zones, railway station link, or major hospital access</span>
+                </div>
+              </label>
+              <label class="triage-radio-option">
+                <input type="radio" name="triageImportance" value="3">
+                <div class="triage-option-text">
+                  <span class="triage-option-label">Rank 3: Strategic Arterial / Highway</span>
+                  <span class="triage-option-sub">National Highway (NH), State Highway (SH), or major inter-city express corridor</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live Priority Calculation Banner -->
+        <div class="triage-formula-callout">
+          <div class="triage-formula-title">
+            <span>Algorithmic Priority Policy (Java <code>DefaultPriorityPolicy</code>)</span>
+            <span id="triageScorePill" class="priority-pill pending">Pending Complete Triage</span>
+          </div>
+          <div class="triage-formula-math" id="triageScoreMath">
+            Formula: (Severity × 3) + (Risk × 3) + (Traffic × 2) + (Importance × 2)
+          </div>
+          <div class="triage-score-display">
+            <span style="font-size: 0.875rem; color: var(--color-text-muted);">Computed Priority:</span>
+            <span class="triage-score-number" id="triageScoreNumber">--</span>
+          </div>
+          <div id="triageValidationMsg" style="font-size: 0.8125rem; font-weight: 600;"></div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Actions -->
+      <div class="op-modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelTriageBtn">Cancel</button>
+        <button type="button" class="btn btn-secondary" id="btnDirectDispatch" style="display: none;">
+          <span>Dispatch Work Order &rarr;</span>
+        </button>
+        <button type="button" class="btn btn-primary" id="btnSaveTriage" disabled>
+          <span>Save Triage Assessment</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dashboard Footer -->
+  <footer class="dash-footer" role="contentinfo">
+    <div class="container dash-footer-container">
+      <div class="dash-footer-left">
+        <strong>Road Sync</strong>
+        <span>• Municipal Operator Central Administration Console (Stage 4)</span>
+      </div>
+      <div>
+        <span style="font-size: 0.8125rem; color: var(--color-text-muted);">Tamil Nadu Highways & Municipal Corporations</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/api-client.js"></script>
+  <script src="../js/public-store.js"></script>
+  <script src="../js/operator-nav.js"></script>
+  <script src="../js/manage-complaints.js"></script>
+</body>
+</html>

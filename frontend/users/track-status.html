@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Sync — Track Complaint Status</title>
+  <meta name="description" content="Follow real-time municipal repair progress and resolution milestones for road hazards reported on the Road Sync civic network.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- Accessible Skip Link -->
+  <a href="#tracking-main" class="skip-link">Skip to tracking progress content</a>
+
+  <!-- ======================================================================
+       Slide-Over Navigation Drawer
+       ====================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+  <aside class="dash-nav-drawer" id="navDrawer" aria-label="Citizen Navigation Drawer" role="dialog" aria-modal="true">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <div class="brand-logo-emblem" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+            <rect width="36" height="36" rx="8" fill="#183B32"/>
+            <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+            <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="drawer-brand-name">Road <span>Sync</span></span>
+          <span class="drawer-brand-sub">Public Portal</span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close navigation drawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- User Snippet -->
+    <div class="drawer-user-card">
+      <div class="user-avatar-initials" aria-hidden="true">PS</div>
+      <div class="drawer-user-meta">
+        <span class="drawer-user-name">Priya Sharma</span>
+        <span class="drawer-role-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Public User
+        </span>
+      </div>
+    </div>
+
+        <!-- Navigation Menu Items (Clean 4-Item Menu: Dashboard, My Complaints, Track Status, Logout) -->
+    <nav class="drawer-nav-section" aria-label="Citizen Portal Pages">
+      <span class="drawer-nav-label">Navigation Menu</span>
+      <ul class="drawer-nav-list">
+        <li>
+          <a href="dashboard-public.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-complaints.html" class="drawer-nav-link" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            <span>My Complaints</span>
+          </a>
+        </li>
+        <li>
+          <a href="track-status.html" class="drawer-nav-link active" data-page-link>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+            </svg>
+            <span>Track Status</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Drawer Footer with Logout (Item 4) -->
+    <div class="drawer-footer">
+      <button type="button" class="drawer-logout-btn js-logout-btn" id="drawerLogoutBtn">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       Dashboard Top Navigation Bar
+       ====================================================================== -->
+  <header class="dash-navbar" role="banner">
+    <div class="container dash-nav-container">
+      
+      <!-- Brand & Hamburger Group -->
+      <div class="dash-brand-wrap">
+        <button type="button" class="dash-hamburger-btn" id="hamburgerBtn" aria-label="Open portal navigation menu" aria-expanded="false" aria-controls="navDrawer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="../index.html" class="brand-link" aria-label="Road Sync Homepage">
+          <div class="brand-logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+              <rect width="36" height="36" rx="8" fill="#183B32"/>
+              <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+              <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Road <span>Sync</span></span>
+            <span class="brand-subline">Citizen Portal</span>
+          </div>
+        </a>
+
+        <div class="portal-role-tag" aria-label="Current Role: Public User">
+          <span class="portal-role-dot" aria-hidden="true"></span>
+          <span>Public User</span>
+        </div>
+      </div>
+
+      
+
+      <!-- Right User Controls -->
+      <div class="dash-user-controls">
+        <button type="button" class="user-profile-btn" id="userProfileBtn" aria-expanded="false" aria-haspopup="true" aria-label="Citizen user profile menu">
+          <span class="user-avatar-initials" aria-hidden="true">PS</span>
+          <span class="user-display-name">Priya</span>
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div class="user-dropdown-menu" id="userDropdownMenu" role="menu">
+          <div class="dropdown-header">
+            <div class="user-avatar-initials large" aria-hidden="true">PS</div>
+            <div class="dropdown-user-info">
+              <span class="dropdown-user-name">Priya Sharma</span>
+              <span class="dropdown-user-role">Public Resident • Tamil Nadu</span>
+            </div>
+          </div>
+          <div class="dropdown-body">
+            <div class="dropdown-info-item">
+              <span class="info-label">Active Portal</span>
+              <span class="info-value">Complaint Status Tracker</span>
+            </div>
+            <div class="dropdown-info-item">
+              <span class="info-label">Workflow Standard</span>
+              <span class="info-value">5-Stage Municipal Lifecycle</span>
+            </div>
+          </div>
+          <div class="dropdown-footer">
+            <button type="button" class="dropdown-action-btn js-logout-btn">
+              <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       Main Content: Track Complaint Progress & Milestones
+       ====================================================================== -->
+  <main id="tracking-main" class="dash-main-area">
+    <div class="container dash-content-container">
+
+      <!-- Page Header -->
+      <div class="portal-page-header">
+        <div class="portal-page-title-group">
+          <nav class="portal-breadcrumb" aria-label="Breadcrumb">
+            <a href="dashboard-public.html">Dashboard</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Track Status</span>
+          </nav>
+          <h1 class="portal-page-title">Track Complaint Status</h1>
+          <p class="portal-page-desc">
+            Follow the 4-stage municipal repair lifecycle from citizen registration to verified asphalt restoration.
+          </p>
+        </div>
+
+        <div class="portal-header-actions">
+          <a href="report-hazard.html" class="btn btn-secondary">
+            <span>Report Another Hazard</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Complaint Selection Bar -->
+      <section class="track-selector-bar" aria-label="Select complaint to track">
+        <label for="trackingSelect" style="font-weight: 700; font-size: 0.875rem; color: var(--color-charcoal); white-space: nowrap;">
+          Select Complaint to Track:
+        </label>
+        <select id="trackingSelect" class="track-select-dropdown" aria-label="Select complaint ticket">
+          <!-- Populated dynamically via track-status.js -->
+        </select>
+      </section>
+
+      <!-- Active Tracked Item Container (Rendered when complaints exist) -->
+      <div id="trackedItemWrapper">
+        
+        <!-- Summary Header Card -->
+        <article class="dash-card" id="trackedSummaryCard" style="margin-bottom: 2rem;">
+          <!-- Dynamically populated via track-status.js -->
+        </article>
+
+        <!-- 4-Stage Milestone Progress Stepper -->
+        <section class="stepper-progress-box" aria-labelledby="stepperTitle">
+          <h2 class="stepper-header-title" id="stepperTitle">Municipal Resolution Milestones</h2>
+          
+          <div class="tracking-stepper-timeline" id="stepperTimeline">
+            <!-- Dynamically populated via track-status.js -->
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Empty State (Shown when 0 complaints exist) -->
+      <div id="trackingEmptyState" class="complaints-empty-state" style="display: none;">
+        <div class="empty-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 14 14"></polyline>
+          </svg>
+        </div>
+        <h3 class="empty-title">No Complaints Available to Track</h3>
+        <p class="empty-desc">You do not have any complaint records in this session. Submit a road defect report to track its repair milestones.</p>
+        <a href="report-hazard.html" class="btn btn-primary">
+          <span>Report Road Hazard</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       Dashboard Footer
+       ====================================================================== -->
+  <footer class="dash-footer" role="contentinfo">
+    <div class="container dash-footer-container">
+      <div class="dash-footer-left">
+        <strong>Road Sync</strong>
+        <span>• Municipal Resolution Tracker</span>
+      </div>
+      
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/api-client.js"></script>
+  <script src="../js/public-store.js"></script>
+  <script src="../js/public-nav.js"></script>
+  <script src="../js/track-status.js"></script>
+</body>
+</html>

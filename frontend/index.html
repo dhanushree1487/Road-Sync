@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Sync — Smart Municipal Road Maintenance & Resource Allocation</title>
+  <meta name="description" content="Road Sync connects citizens, municipal operators, and maintenance teams to report road damage, prioritize repairs, and coordinate municipal resources efficiently.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ======================================================================
+       Site Header & Navigation
+       ====================================================================== -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="navbar" aria-label="Main Navigation">
+        <!-- Brand Wordmark & Emblem -->
+        <a href="#hero" class="brand-link" aria-label="Road Sync Homepage">
+          <div class="brand-logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="36" height="36" fill="none">
+              <rect width="36" height="36" rx="8" fill="#183B32"/>
+              <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+              <path d="M8.5 31 L13.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M27.5 31 L22.5 5" stroke="#F4F0E6" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="18" y1="8" x2="18" y2="13" stroke="#D4A56A" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="18" y1="17" x2="18" y2="22" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="26" x2="18" y2="30" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Road <span>Sync</span></span>
+            <span class="brand-subline">Municipal Road Platform</span>
+          </div>
+        </a>
+
+        <!-- Desktop & Mobile Navigation Links -->
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#hero" class="nav-link">Home</a></li>
+          <li><a href="#login" class="nav-link">Login</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#testimonials" class="nav-link">Scenarios</a></li>
+        </ul>
+
+        <!-- Call-to-Action & Mobile Toggle -->
+        <div class="nav-actions">
+          <a href="#login" class="btn btn-primary" id="navReportCta">Report Road Damage</a>
+          <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Toggle navigation menu">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       Main Content Container
+       ====================================================================== -->
+  <main id="main-content">
+    
+    <!-- --------------------------------------------------------------------
+         Hero Section (Headline Overlaid on Aerial Road Photograph)
+         -------------------------------------------------------------------- -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-image-stage">
+          <img 
+            id="heroAerialImg"
+            src="assets/images/hero-aerial.jpg" 
+            alt="High-angle aerial photograph of modern urban highway interchange with asphalt curves and road infrastructure" 
+            class="hero-image"
+            loading="eager"
+          >
+          <div class="hero-overlay">
+            <h1 class="hero-title">Better Roads. Smarter Cities.</h1>
+            <div class="hero-actions">
+              <a href="#login" class="btn btn-hero-primary">Report Road Damage</a>
+              <a href="#how-it-works" class="btn btn-hero-secondary">Explore the Platform</a>
+            </div>
+          </div>
+
+          <!-- Fallback container in case image fails to load -->
+          <div class="hero-visual-fallback" aria-hidden="true">
+            <p>Municipal Road Infrastructure Network</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------
+         Login Section (Directly Below Hero)
+         -------------------------------------------------------------------- -->
+    <section class="section login-section" id="login">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Login</h2>
+        </div>
+
+        <div class="roles-grid">
+          <!-- Role 1: Public User -->
+          <article class="role-card">
+            <div class="role-header">
+              <span class="role-badge public">Citizen Access</span>
+              <h3 class="role-title">Public User</h3>
+              <p class="role-description">
+                Report road damage, submit supporting photographs, and track complaint progress.
+              </p>
+            </div>
+            <a href="login.html?role=public" class="btn btn-primary role-action">
+              Login
+            </a>
+          </article>
+
+          <!-- Role 2: Municipal Operator -->
+          <article class="role-card">
+            <div class="role-header">
+              <span class="role-badge operator">Administration</span>
+              <h3 class="role-title">Municipal Operator</h3>
+              <p class="role-description">
+                Review reports, assess priorities, assign repair jobs, and monitor maintenance operations.
+              </p>
+            </div>
+            <a href="login.html?role=operator" class="btn btn-primary role-action">
+              Login
+            </a>
+          </article>
+
+          <!-- Role 3: Maintenance Team -->
+          <article class="role-card">
+            <div class="role-header">
+              <span class="role-badge crew">Field Crews</span>
+              <h3 class="role-title">Maintenance Team</h3>
+              <p class="role-description">
+                View assigned repair jobs, check equipment requirements, and update job completion status.
+              </p>
+            </div>
+            <a href="login.html?role=crew" class="btn btn-primary role-action">
+              Login
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------
+         How It Works Section (3-Step Coordination Cycle)
+         -------------------------------------------------------------------- -->
+    <section class="section how-it-works-section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-eyebrow badge-olive">
+            <span>Municipal Workflow</span>
+          </div>
+          <h2 class="section-title">How Road Sync Works</h2>
+          <p class="section-subtitle">
+            A clear, transparent three-step coordination cycle that turns citizen hazard reports into verified road repairs.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <!-- Step 1: Report -->
+          <article class="step-card">
+            <div class="step-top">
+              <span class="step-number">STEP 01</span>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Report</h3>
+            <p class="step-description">
+              Citizens submit road damage reports with the location, description, and relevant photographs.
+            </p>
+            <div class="step-tags">
+              <span class="step-tag">Location Pinning</span>
+              <span class="step-tag">Photo Evidence</span>
+              <span class="step-tag">Instant Ticket</span>
+            </div>
+          </article>
+
+          <!-- Step 2: Prioritize -->
+          <article class="step-card">
+            <div class="step-top">
+              <span class="step-number">STEP 02</span>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Prioritize</h3>
+            <p class="step-description">
+              Municipal operators review reports and evaluate repair priority based on severity and traffic impact.
+            </p>
+            <div class="step-tags">
+              <span class="step-tag">Severity Scoring</span>
+              <span class="step-tag">Ward Assignment</span>
+              <span class="step-tag">Work Order Plan</span>
+            </div>
+          </article>
+
+          <!-- Step 3: Repair -->
+          <article class="step-card">
+            <div class="step-top">
+              <span class="step-number">STEP 03</span>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Repair</h3>
+            <p class="step-description">
+              Maintenance teams receive assigned jobs, organize required equipment, and update repair progress.
+            </p>
+            <div class="step-tags">
+              <span class="step-tag">Equipment Prep</span>
+              <span class="step-tag">Field Work</span>
+              <span class="step-tag">Status Verification</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------
+         Features Section (6-Card Core Capabilities Grid)
+         -------------------------------------------------------------------- -->
+    <section class="section features-section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-eyebrow badge-light">
+            <span>Core Capabilities</span>
+          </div>
+          <h2 class="section-title">Purpose-Built for Modern Urban Infrastructure</h2>
+          <p class="section-subtitle">
+            Designed as an integrated municipal platform to coordinate every phase of road maintenance and resource planning.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="feature-title">Road Damage Reporting</h3>
+            <p class="feature-description">
+              Enables residents to submit structured damage reports with exact street landmarks, road conditions, and supporting photographs.
+            </p>
+          </article>
+
+          <!-- Feature 2 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 14 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title">Smart Repair Prioritization</h3>
+            <p class="feature-description">
+              Helps municipal officers triage incoming complaints based on severity, arterial traffic volume, and road safety classifications.
+            </p>
+          </article>
+
+          <!-- Feature 3 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Maintenance Team Assignment</h3>
+            <p class="feature-description">
+              Directs repair work orders to designated municipal road crews with structured repair briefs and target completion windows.
+            </p>
+          </article>
+
+          <!-- Feature 4 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Repair Progress Tracking</h3>
+            <p class="feature-description">
+              Provides transparent lifecycle tracking from initial intake through inspection, work in progress, and final repair sign-off.
+            </p>
+          </article>
+
+          <!-- Feature 5 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Equipment & Resource Coordination</h3>
+            <p class="feature-description">
+              Organizes essential repair equipment — including asphalt mixers, rollers, and pavers — to ensure crews are fully equipped on site.
+            </p>
+          </article>
+
+          <!-- Feature 6 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="9" y1="21" x2="9" y2="9"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Centralized Municipal Monitoring</h3>
+            <p class="feature-description">
+              Provides municipal leadership a consolidated view of pending repairs, ward workloads, and city-wide road maintenance health.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- --------------------------------------------------------------------
+         About Section (Civic Purpose & Core Pillars)
+         -------------------------------------------------------------------- -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-narrative">
+            <div class="badge-eyebrow badge-olive">
+              <span>Our Civic Mission</span>
+            </div>
+            <h2 class="section-title">Modernizing Municipal Road Maintenance</h2>
+            <p class="about-p">
+              Road Sync is a centralized platform designed to improve coordination between citizens, municipal authorities, and road maintenance teams.
+            </p>
+            <p class="about-p">
+              By replacing fragmented complaint channels with structured civic workflows, Road Sync provides a clear pipeline for reporting potholes and road hazards, evaluating repair urgency, and allocating machinery and crews with accountability.
+            </p>
+          </div>
+
+          <div class="about-pillars">
+            <!-- Pillar 1 -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <h3 class="pillar-title">Civic Transparency</h3>
+                <p class="pillar-desc">
+                  Open, traceable communication between residents and municipal divisions, eliminating lost reports.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h3 class="pillar-title">Efficient Repair Coordination</h3>
+                <p class="pillar-desc">
+                  Streamlined handoffs from complaint triage to dispatch, reducing the administrative gap before road crews arrive.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+              </div>
+              <div>
+                <h3 class="pillar-title">Responsible Resource Allocation</h3>
+                <p class="pillar-desc">
+                  Ensuring equipment, materials, and repair crews are deployed based on actual damage severity and route significance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------
+         Testimonials / Demonstration Scenarios Section
+         -------------------------------------------------------------------- -->
+    <section class="section testimonials-section" id="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-eyebrow badge-light">
+            <span>Community Context</span>
+          </div>
+          <h2 class="section-title">Designed Around Community Needs</h2>
+          <div class="demo-disclaimer-pill" role="note">
+            <span>Sample Stakeholder Scenarios (Demonstration)</span>
+          </div>
+          <p class="section-subtitle" style="margin-top: 1rem;">
+            Illustrating how Road Sync addresses distinct user challenges across the civic maintenance ecosystem.
+          </p>
+        </div>
+
+        <div class="testimonials-grid">
+          <!-- Persona 1: Resident -->
+          <article class="testimonial-card">
+            <span class="scenario-label">Evaluation Profile • Citizen Commuter</span>
+            <blockquote class="testimonial-quote">
+              “A direct way to report neighborhood potholes with photos and track when repairs are scheduled would make municipal maintenance feel genuinely responsive.”
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">RS</div>
+              <div>
+                <p class="author-name">Neighborhood Resident</p>
+                <p class="author-role">Sample Citizen Persona</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Persona 2: Municipal Operator -->
+          <article class="testimonial-card">
+            <span class="scenario-label">Evaluation Profile • Ward Administration</span>
+            <blockquote class="testimonial-quote">
+              “Having citizen reports consolidated into a prioritized queue prevents duplicate complaints and allows our division to allocate road repair crews with confidence.”
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">MO</div>
+              <div>
+                <p class="author-name">Ward Operations Officer</p>
+                <p class="author-role">Sample Municipal Persona</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Persona 3: Maintenance Lead -->
+          <article class="testimonial-card">
+            <span class="scenario-label">Evaluation Profile • Road Works Crew</span>
+            <blockquote class="testimonial-quote">
+              “Clear repair orders that specify the road damage type and equipment requirements beforehand help our teams arrive fully prepared on site.”
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">ML</div>
+              <div>
+                <p class="author-name">Maintenance Crew Lead</p>
+                <p class="author-role">Sample Field Crew Persona</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       Site Footer
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Brand Summary -->
+        <div class="footer-brand-wrap">
+          <a href="#hero" class="footer-brand" aria-label="Road Sync Home">
+            <div class="brand-logo-emblem" aria-hidden="true">
+              <svg viewBox="0 0 36 36" width="32" height="32" fill="none">
+                <rect width="36" height="36" rx="8" fill="#183B32"/>
+                <path d="M9 31 L14 5 L22 5 L27 31 Z" fill="#292D29"/>
+                <line x1="18" y1="9" x2="18" y2="15" stroke="#D4A56A" stroke-width="2" stroke-linecap="round"/>
+                <line x1="18" y1="21" x2="18" y2="28" stroke="#D4A56A" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="brand-name">Road <span>Sync</span></span>
+          </a>
+          <p class="footer-description">
+            Smart Municipal Road Maintenance and Resource Allocation System — Bridging citizens, municipal operators, and maintenance crews for safer, durable roadways.
+          </p>
+          <div class="footer-tagline-badge">
+            <span>Urban Infrastructure & Civic Technology Platform</span>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="footer-col-title">Navigation</h3>
+          <ul class="footer-links">
+            <li><a href="#hero" class="footer-link">Home</a></li>
+            <li><a href="#login" class="footer-link">Login Portals</a></li>
+            <li><a href="#how-it-works" class="footer-link">How It Works</a></li>
+            <li><a href="#features" class="footer-link">System Features</a></li>
+            <li><a href="#about" class="footer-link">About Road Sync</a></li>
+            <li><a href="#testimonials" class="footer-link">Stakeholder Scenarios</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Academic Note -->
+        <div>
+          <h3 class="footer-col-title">Demonstration</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="#" class="footer-link" data-role-action="contact">Municipal Demo Inquiry</a>
+            </li>
+            <li><span class="footer-link" style="opacity: 0.7;">Stage 1: Public Homepage</span></li>
+            <li><span class="footer-link" style="opacity: 0.7;">Stage 2: Portals & Dashboards (Planned)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Road Sync. All rights reserved.</p>
+        <div class="footer-meta">
+          <span>Empowering municipal authorities and communities for safer, durable roadways.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       Native Accessible Modal Dialog (Stage 1 Notice)
+       ====================================================================== -->
+  <dialog id="roleModal" class="modal-dialog" aria-labelledby="modalRoleTitle" aria-describedby="modalRoleBody">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <span id="modalRoleBadge" class="modal-badge public">Stage 1 Notice</span>
+      <h2 id="modalRoleTitle" class="modal-title">Role Portal Access</h2>
+      <p id="modalRoleBody" class="modal-body">
+        Role-based workflows are scheduled for Stage 2 development.
+      </p>
+
+      <div id="modalRoleNotice" class="modal-notice-box">
+        Stage 1 Demonstration Notice.
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="modalActionBtn">Got It</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>
